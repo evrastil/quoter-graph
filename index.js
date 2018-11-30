@@ -24,14 +24,14 @@ const initGraph = async () => {
 
 }
 
-const listCarrierServicesDeliveringIntoZone = async (zip) => {
+const listCarrierServicesDeliveringIntoZone = (zip) => {
     // return await g.V().has("zone", "zip", zip).in_("delivers").values('name').toList()
-    return await g.V().has("zone", "zip", zip).inE("delivers").as("transit", "rate")
+    return g.V().has("zone", "zip", zip).inE("delivers").as("transit", "rate")
         .outV().as("zone").select("transit", "rate", "zone").by("days").by("rate").by("name").toList()
 }
 
-const listZonesThatCarrierServiceDeliversTo = async (carrierName) => {
-    return await g.V().has("carrier", "name", carrierName).out("delivers").valueMap().toList()
+const listZonesThatCarrierServiceDeliversTo = (carrierName) => {
+    return g.V().has("carrier", "name", carrierName).out("delivers").valueMap().toList()
 }
 
 (async () => {
